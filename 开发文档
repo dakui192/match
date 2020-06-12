@@ -1,0 +1,45 @@
+需求：
+    代码实现如下功能点
+    1. 用户输入任意道路交叉口或者重要地标查询半径5公里范围内最近的中石化加油站和福特4S店，将结果记录。
+    2. 需要另外一个接口查询系统中每个用户查询最频繁的加油站和4S店。select * from 查询语句。
+
+    数据：保存在临时内存数据库 H2
+    安全：需要通过Github账号或微信账号进行用户身份验证
+    界面：除了Github账号或微信账号登录验证可以使用H5页面外，其余均可以rest API 提供
+    技术要求：请基于 Spring Boot 2.1.3完成以上需求
+    交付物：以上需求实现代码(含单元测试代码)
+    考核标准: 所述功能是否都实现，代码可成功编译执行（最好提供可访问URL）；代码规范及质量；设计思路；不能使用第三方现成代码库；
+
+思路：
+    1：通过地址匹配出 经纬度，再通过经纬度计算公司 统计出用户查询的信息 异步将信息插入到日志中
+    2：统计日志信息
+
+准备工作：
+    1：搭建Springboot 框架
+    2：数据 使用 H2内存数据库 学习
+    3：抓取 中石化官网中所有的中石化网点数据 和 福特所有4S店（代码实现）
+    4：在 百度地图开放平台 http://lbsyun.baidu.com/apiconsole/key#/home 注册访问信息 6k/d 免费
+    5：第三方 GitHub 登录 https://github.com/settings/apps 上注册项目信息 引入第三方登录验证
+
+代码实现：
+    1：抓包代码 中石化
+        接口地址：https://www.sinopecsales.com/website/gasStationAction_queryGasStationByCondition.action?page.pageNo=2
+        实现代码 com.address.match.demo.service.impl.GrabDataServiceImpl.grabSinopecData
+    2: 抓包实现 福特4S店
+        接口地址：http://www.autobaidu.com/4slist.php?&brand=57534&page=3
+        实现代码 com.address.match.demo.service.impl.GrabDataServiceImpl.grabFordData
+    3：根据地址解析出 经纬度
+        实现代码 com.address.match.demo.service.impl.BaiduServiceImpl.getGISByAddress
+    4：表数据
+        resource/db/schema.sql 建表语句
+        resource/db/data.sql 初始化数据
+
+
+
+访问：
+    GitHub 第三方接口访问
+        http://localhost:8080/match/
+    REST API
+         http://localhost:8080/match/swagger-ui.html
+    H2 数据库
+        http://localhost:8080/match/h2

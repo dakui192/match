@@ -1,0 +1,79 @@
+## 环境配置
+server:
+  # 服务器的HTTP端口，默认为9080
+  port: 8080
+  servlet:
+    # 应用的访问路径
+    context-path: /match
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 150
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 50
+    #max-http-post-size: -1
+  address: 0.0.0.0
+
+## 数据源 H2 配置信息
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+    hikari:
+      # 最小空闲连接
+      minimum-idle: 30
+      # 最大连接数
+      maximum-pool-size: 100
+      # 空闲连接超时时间
+      idle-timeout: 500000
+      # 连接最大存活时间
+      max-lifetime: 600000
+      # 连接超时时间：毫秒
+      connection-timeout: 60000
+      # 用于测试连接是否可用的查询语句
+      connection-test-query: SELECT 1 FROM DUAL
+    platform: h2
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+      path: /h2
+
+
+## 百度地址配置信息
+baidu:
+  url: http://api.map.baidu.com/geocoding/v3/
+  ak: ZF4OHEWMLN8HLrR8ceUbAe3tlLpMm6j6
+  output: json
+
+## github 配置信息
+github:
+  clientId: 49b70b14b9f76826a969
+  clientSecret: 3e6709217febf66654a666625f09dc1b4251fcf1
+  authorizeUrl: https://github.com/login/oauth/authorize
+  redirectUrl : http://52456f1166d5.ngrok.io/match/callback
+  accessTokenUrl: https://github.com/login/oauth/access_token
+  userInfoUrl: https://api.github.com/user
+
+## 日志配置
+logging:
+  config: classpath:logback.xml
+
+## mybatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis-config.xml
+  type-aliases-package: com.address.match.demo.data

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.address.match.demo.mapper.MatchMapper">
+
+    <select id="getMinRangeSinopecByGisXAndGisY" resultType="String">
+--         # 经纬度 距离计算公式
+--         # 赤道半径 6378137 极地半径 6356725
+--         # 已知 公式 如下 ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($latitude*PI()/180-latitude*PI()/180)/2),2)+
+--         COS($latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($longitude*PI()/180-
+--         longitude*PI()/180)/2),2)))*1000) AS distance
+--         a.max(sinopec_name),
+--         a.max(ford_name)
+        select
+          sinopec_name
+        from
+          match_sinopec_info
+        where state=0
+          and  ROUND(6378.138*2*ASIN(SQRT(
+            POWER(
+                SIN(
+                      ( #{lat}*PI()/180-lat*PI()/180)/2
+                    ),
+                2)
+            +
+            COS(#{lat}*PI()/180)*COS(
+              lat*PI()/180
+            )*POWER(
+              SIN(
+                  (#{lng}*PI()/180-
+                    lng*PI()/180
+                  )/2),2
+              )
+              )
+            )*1000
+        ) &lt; #{scope} order by
+          ROUND(6378.138*2*ASIN(SQRT(
+            POWER(
+                SIN(
+                      ( #{lat}*PI()/180-lat*PI()/180)/2
+                    ),
+                2)
+            +
+            COS(#{lat}*PI()/180)*COS(
+              lat*PI()/180
+            )*POWER(
+              SIN(
+                  (#{lng}*PI()/180-
+                    lng*PI()/180
+                  )/2),2
+              )
+              )
+            )*1000
+        )
+         limit 1
+    </select>
+    <select id="queryMostFrequreVisitInfo" resultType="com.address.match.demo.data.dto.MostFrequeVisitInfo">
+        select user_id,
+                (
+                  select query_name
+                    from match_opera_log t1
+                      where t1.user_id=t.user_id  and state=0
+                        group by query_name order by count(*) desc limit 1
+                ) as sinopec_name,
+                (
+                  select query_name
+                    from match_opera_log t2
+                      where t2.user_id=t.user_id and state=1
+                       group by query_name order by count(*) desc limit 1
+                ) as ford_name
+          from
+         (select distinct  user_id from match_opera_log
+         <where>
+             <if test="user_id!=null ">
+                 and user_id=#{user_id}
+             </if>
+         </where>
+     ) t
+
+    </select>
+    <select id="getMinRangeFordByGisXAndGisY" resultType="java.lang.String">
+        select
+          ford_name
+        from
+          match_ford_info
+        where state=0
+          and  ROUND(6378.138*2*ASIN(SQRT(
+            POWER(
+                SIN(
+                      ( #{lat}*PI()/180-lat*PI()/180)/2
+                    ),
+                2)
+            +
+            COS(#{lat}*PI()/180)*COS(
+              lat*PI()/180
+            )*POWER(
+              SIN(
+                  (#{lng}*PI()/180-
+                    lng*PI()/180
+                  )/2),2
+              )
+              )
+            )*1000
+        ) &lt; #{scope} order by
+          ROUND(6378.138*2*ASIN(SQRT(
+            POWER(
+                SIN(
+                      ( #{lat}*PI()/180-lat*PI()/180)/2
+                    ),
+                2)
+            +
+            COS(#{lat}*PI()/180)*COS(
+              lat*PI()/180
+            )*POWER(
+              SIN(
+                  (#{lng}*PI()/180-
+                    lng*PI()/180
+                  )/2),2
+              )
+              )
+            )*1000
+        )
+         limit 1
+    </select>
+
+    <insert id="batchAddOperaLog">
+        <!--@mbg.generated-->
+        insert into match_opera_log
+        (user_id, state, query_name, ip, remark)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.user_id,jdbcType=VARCHAR},
+             #{item.state,jdbcType=CHAR},
+             #{item.query_name,jdbcType=VARCHAR},
+             #{item.ip,jdbcType=VARCHAR},
+             #{item.remark,jdbcType=VARCHAR}
+             )
+        </foreach>
+    </insert>
+
+</mapper>
