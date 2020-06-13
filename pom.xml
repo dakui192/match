@@ -154,7 +154,7 @@
 
     </dependencies>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -164,7 +164,7 @@
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>1.5.3</version>
-                <!-- Configure generic document generation settings -->
+                &lt;!&ndash; Configure generic document generation settings &ndash;&gt;
                 <configuration>
                     <sourceDirectory>${project.basedir}/docs/asciidoc</sourceDirectory>
                     <sourceDocumentName>index.adoc</sourceDocumentName>
@@ -179,8 +179,8 @@
                         <generated>${project.build.directory}/asciidoc</generated>
                     </attributes>
                 </configuration>
-                <!-- Since each execution can only handle one backend, run
-                     separate executions for each desired output type -->
+                &lt;!&ndash; Since each execution can only handle one backend, run
+                     separate executions for each desired output type &ndash;&gt;
                 <executions>
                     <execution>
                         <id>output-html</id>
@@ -190,13 +190,13 @@
                         </goals>
                         <configuration>
                             <backend>html5</backend>
-                            <!--<outputDirectory>${project.basedir}/docs/asciidoc/html</outputDirectory>-->
+                            &lt;!&ndash;<outputDirectory>${project.basedir}/docs/asciidoc/html</outputDirectory>&ndash;&gt;
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
     <!-- Maven 仓库配置信息 -->
    <repositories>
