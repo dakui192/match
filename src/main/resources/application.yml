@@ -66,6 +66,7 @@ github:
   redirectUrl : http://localhost:8080/match/callback
   accessTokenUrl: https://github.com/login/oauth/access_token
   userInfoUrl: https://api.github.com/user
+  loginUrl: http://localhost:8080/match/
 
 ## 日志配置
 #logging:

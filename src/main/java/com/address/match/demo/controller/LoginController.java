@@ -58,7 +58,7 @@ public class LoginController {
             String accessToken = getAccessToken(code);
             return "用户信息:" + getUserInfo(accessToken);
         }catch (Exception e){
-            return "连接超时：请重试！";
+            return "连接超时：请重试！+<a>"+gitHubConfig.getLoginUrl()+"</a>";
         }
     }
 

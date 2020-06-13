@@ -37,4 +37,8 @@ public class GitHubConfig {
      * 获取用户信息的URL
      */
     private String userInfoUrl;
+    /**
+     * 登录URL
+     */
+    private String loginUrl;
 }
