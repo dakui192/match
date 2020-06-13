@@ -63,13 +63,13 @@ github:
   clientId: 49b70b14b9f76826a969
   clientSecret: 3e6709217febf66654a666625f09dc1b4251fcf1
   authorizeUrl: https://github.com/login/oauth/authorize
-  redirectUrl : http://52456f1166d5.ngrok.io/match/callback
+  redirectUrl : http://localhost:8080/match/callback
   accessTokenUrl: https://github.com/login/oauth/access_token
   userInfoUrl: https://api.github.com/user
 
 ## 日志配置
-logging:
-  config: classpath:logback.xml
+#logging:
+#  config: classpath:logback.xml
 
 ## mybatis 配置
 mybatis:
