@@ -198,42 +198,26 @@
         </plugins>
     </build>
 
-
-   <repositories>
-    <repository>
-     <id>public</id>
-     <name>aliyun nexus</name>
-     <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-     <releases>
-      <enabled>true</enabled>
-     </releases>
-    </repository>
-   </repositories>
     <!-- Maven 仓库配置信息 -->
-   <pluginRepositories>
-       <pluginRepository>
+   <repositories>
+       <repository>
            <id>maven</id>
-           <name>maven2 nexus</name>
-           <url>https://repo1.maven.org/maven2/</url>
-           <releases>
-               <enabled>true</enabled>
-           </releases>
-           <snapshots>
-               <enabled>false</enabled>
-           </snapshots>
-       </pluginRepository>
-       <pluginRepository>
-           <id>public</id>
            <name>aliyun nexus</name>
            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
            <releases>
                <enabled>true</enabled>
            </releases>
-           <snapshots>
-               <enabled>false</enabled>
-           </snapshots>
-       </pluginRepository>
+       </repository>
+       <repository>
+           <id>public</id>
+           <name>maven2 nexus</name>
+           <url>https://repo1.maven.org/maven2/</url>
+           <releases>
+               <enabled>true</enabled>
+           </releases>
+       </repository>
+   </repositories>
 
-   </pluginRepositories>
+
 
 </project>
